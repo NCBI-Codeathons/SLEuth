@@ -1,1 +1,7 @@
-# STRATIFICATION-OF-SLE-PATIENT-COHORT-FOR-PRECISION-MEDICINE
+# STRATIFICATION OF SLE PATIENT COHORT FOR PRECISION MEDICINE
+
+Systemic Lupus Erythematosus (SLE) is a complex polygenic autoimmune disease. Existing literature suggest that combination of genetic risk alleles and environmental factors can create an autoimmune-prone immune system which becomes dysregulated, leading to autoimmunity. SLE is clinically and genetically heterogeneous, which complicates its diagnosis, prognosis, management, and the development of effective therapeutic protocols. We have developed an extensive dataset combining genomic sequences of more than 28 SLE risk loci with extensive autoantibody profiles and clinical pathologies. 
+
+Our goal is to develop analytical tools that can use these data to stratify SLE patients into subsets with significant differences in their genetics and clinical characteristics. The development of a genomic/phenotypic test that could predict clinical course and response to management would significantly improve outcomes and prevent complications of SLE. We believe that it is likely that this “precision medicine” approach will lead to the development of companion diagnostics that can be used to identify SLE patients that are most likely to respond positively to specific drug therapies. Since SLE clinical trials often show drug efficacy in a subset of patients but fail to be of significant benefit for the total patient cohort, we believe that effective subsetting of SLE patients based on genetic and phenotypic elements could dramatically improve the discovery of effective drug therapies for targeted patients subsets.
+
+Team Lead: Prithvi Raj, Immunology, profiles.utsouthwestern.edu/profile/116973/prithvi-raj.html  
