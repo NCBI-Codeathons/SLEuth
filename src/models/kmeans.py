@@ -45,11 +45,9 @@ if __name__ == "__main__":
     X = load_iris().data
     # load the PCA files
     # test
-    """
     distortions=search_k_means_cluster(X, min_num, max_num)
     plot_elbow(min_num, max_num, distortions)
     # after selecting the best cluster
-    """
     optimal_num = 7
     _, y_km = run_kmeans(X, optimal_num)
     vis_tsne(X, y_km) 
