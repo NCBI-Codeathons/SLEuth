@@ -1,13 +1,12 @@
 from sklearn.decomposition import PCA
 import numpy as np
 
-def get_top_k_components(snp_data, var_threshold=0.80, return_fit_transform=False):
+def get_top_k_components(snp_data, var_threshold=0.80, return_projections=False):
     pca = PCA()
     pca.fit(snp_data)
     top_k = np.argmax(np.cumsum(pca.singular_values_) / np.sum(pca.singular_values_) > var_threshold)
 
-    if return_fit_transform:
-        pca.n_components = top_k
+    if return_projections:
         return pca.transform(snp_data)
     else:
         return pca.components_[:top_k]
