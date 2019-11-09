@@ -4,7 +4,9 @@ from sklearn.cluster import KMeans
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.manifold import TSNE
+import umap
 from sklearn.datasets import load_iris
+
 
 def plot_elbow(min_num, max_num, distortions, y_label, title):
     """
@@ -22,4 +24,16 @@ def vis_tsne(X,y_km):
     """
     X_embedded = TSNE(n_components=2).fit_transform(X)
     sns.scatterplot(X_embedded[:,0], X_embedded[:,1], hue=y_km, legend='full', palette="Set1")
+    plt.title('Visualized by t-SNE')
     plt.show()
+
+def vis_umap(X, y_km):
+    """
+    visualize by UMAP
+    """
+    reducer = umap.UMAP()
+    X_embedded = reducer.fit_transform(X)
+    sns.scatterplot(X_embedded[:,0], X_embedded[:,1], hue=y_km, legend='full', palette="Set1")
+    plt.title('Visualized by UMAP')
+    plt.show()
+
