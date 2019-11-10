@@ -20,7 +20,7 @@ Table of Contents
 The project aims to implement an analytical tool to stratify Systemic Lupus Erythematosus (SLE) patients into subsets with significant differences based on their genetics variant information. Due to the observation in SLE clinical trials that drug efficacy is often seen in a subset of patients instead of the whole cohort, we believe that this stratification strategy could predict the potential clinical outcomes of a newly admitted SLE patient, and improve the discovery of effective drug therapies for targeted patients subsets. 
 
 
-## Workflow  
+# Workflow  
 ### 1. Data Preprocessing  
 1.1 The input data is a 1349 x 110K matrix. Each row is the record from one case and one column stands for one SNP site;  
 1.2 Split the matrix according to the 53 risk loci to generate 53 matrices;   
