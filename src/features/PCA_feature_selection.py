@@ -54,12 +54,18 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
         # Transform X to top_k pca loadings by gene
         x_transform_list = []
         for gene in mutations_by_gene.keys():
-            x_transform_list.append(self.PCA_by_gene[gene].transform(X)[:, :self.top_k_PC_by_gene[gene]])
+            x_by_gene_transform = self.PCA_by_gene[gene].transform(mutations_by_gene[gene])
+            x_transform_list.append(x_by_gene_transform[:, :self.top_k_PC_by_gene[gene]])
 
         pca_projs_concat = np.concatenate(x_transform_list,axis=1)
         print("pca_projs_concat.shape", pca_projs_concat.shape)
 
-        return pca_projs_concat
+        pca_proj_names = []
+        for i, gene in enumerate(mutations_by_gene.keys()):
+            for n in range(self.top_k_PC_by_gene[gene]):
+                pca_proj_names.append(gene + "_" + str(n))
+
+        return pd.DataFrame(pca_projs_concat, index=X.index, columns=pca_proj_names)
 
     def transform(self, X, y=None):
         mutations_by_gene = self.get_mutations_by_gene_dict(X)
@@ -72,7 +78,12 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
 
         pca_projs_concat = np.concatenate(x_transform_list,axis=1)
 
-        return pca_projs_concat
+        pca_proj_names = []
+        for i, gene in enumerate(mutations_by_gene.keys()):
+            for n in range(self.top_k_PC_by_gene[gene]):
+                pca_proj_names.append(gene + "_" + str(n))
+
+        return pd.DataFrame(pca_projs_concat, index=X.index, columns=pca_proj_names)
 
 
 def get_top_k_components(snp_data, var_threshold=0.80, return_fit_transform=False):
