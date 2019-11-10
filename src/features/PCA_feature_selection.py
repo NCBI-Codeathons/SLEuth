@@ -1,5 +1,72 @@
 from sklearn.decomposition import PCA
 import numpy as np
+import pandas as pd
+import sklearn
+
+
+class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
+    def __init__(self, variants_genes_path="../../data/interim/variants_top56_genes.csv",
+                 variance_threshold=0.9) -> None:
+        self.variants_top56_genes_path = variants_genes_path
+        self.variance_threshold = variance_threshold
+
+        super().__init__()
+
+    def get_mutations_by_gene_dict(self, snps_df):
+        variants_top56_genes = pd.read_table(self.variants_top56_genes_path, sep=",")
+        variants_top56_genes.set_index("Variant ID", inplace=True)
+        variants_top56_genes = variants_top56_genes.filter(items=["Gene(s)", "Variant ID"])
+        # genes_matched_variants = snps_df.columns & variants_top56_genes.index
+        mutations_gene_matched = snps_df.T.join(variants_top56_genes, how="right")
+        mutations_by_gene = {}
+        mutations_gene_gb = mutations_gene_matched.groupby("Gene(s)")
+
+        for x in mutations_gene_gb.groups:
+            mutations_gene_df = mutations_gene_gb.get_group(x)
+            gene_name = mutations_gene_df["Gene(s)"].iloc[0]
+            print(gene_name)
+            mutations_gene_df = mutations_gene_df.drop(columns=["Gene(s)"]).dropna(axis=0).T
+            #     mutations_gene_df.to_csv("../data/processed/SNPs_by_gene/"+gene_name+".csv")
+            mutations_by_gene[gene_name] = mutations_gene_df
+
+        return mutations_by_gene
+
+
+    def fit_transform(self, X, y=None, **fit_params):
+        """
+
+        :param X: SNPs DataFrame with sample id rows and SNP site columns (i.e. chromesome:location)
+        :param y:
+        :param fit_params:
+        :return:
+        """
+        self.mutations_by_gene = self.get_mutations_by_gene_dict(X)
+        self.PCA_by_gene = {}
+        self.top_k_PC_by_gene = {}
+
+        # FIT PCAs
+        for gene in self.mutations_by_gene.keys():
+            self.PCA_by_gene[gene] = PCA()
+            self.PCA_by_gene[gene].fit(X)
+            top_k = np.argmax(np.cumsum(np.power(self.PCA_by_gene[gene].singular_values_, 2)) /
+                              np.sum(np.power(self.PCA_by_gene[gene].singular_values_, 2)) > self.variance_threshold)
+
+            self.top_k_PC_by_gene[gene] = top_k
+
+            print(gene, self.mutations_by_gene[gene].shape[1], "top_k", top_k, self.PCA_by_gene[gene].shape)
+
+        # Transform X to top_k pca loadings by gene
+        x_transform_list = []
+        for gene in self.mutations_by_gene.keys():
+            x_transform_list.append(self.PCA_by_gene[gene].transform(X)[:, :self.top_k_PC_by_gene[gene]])
+
+        pca_projs_concat = np.concatenate(x_transform_list,axis=1)
+        print("pca_projs_concat.shape", pca_projs_concat.shape)
+
+        return pca_projs_concat
+
+    def transform(self, X, y=None):
+        pass
 
 
 def get_top_k_components(snp_data, var_threshold=0.80, return_fit_transform=False):
