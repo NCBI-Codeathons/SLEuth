@@ -35,28 +35,25 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
         """
 
         :param X: SNPs DataFrame with sample id rows and SNP site columns (i.e. chromesome:location)
-        :param y:
         :param fit_params:
         :return:
         """
-        self.mutations_by_gene = self.get_mutations_by_gene_dict(X)
+        mutations_by_gene = self.get_mutations_by_gene_dict(X)
         self.PCA_by_gene = {}
         self.top_k_PC_by_gene = {}
 
         # FIT PCAs
-        for gene in self.mutations_by_gene.keys():
+        for gene in mutations_by_gene.keys():
             self.PCA_by_gene[gene] = PCA()
-            self.PCA_by_gene[gene].fit(X)
+            self.PCA_by_gene[gene].fit(mutations_by_gene[gene])
             top_k = np.argmax(np.cumsum(np.power(self.PCA_by_gene[gene].singular_values_, 2)) /
                               np.sum(np.power(self.PCA_by_gene[gene].singular_values_, 2)) > self.variance_threshold)
-
             self.top_k_PC_by_gene[gene] = top_k
-
-            print(gene, "top_k", top_k, self.PCA_by_gene[gene].components_.shape)
+            print(gene, "top_k", top_k, mutations_by_gene[gene].shape)
 
         # Transform X to top_k pca loadings by gene
         x_transform_list = []
-        for gene in self.mutations_by_gene.keys():
+        for gene in mutations_by_gene.keys():
             x_transform_list.append(self.PCA_by_gene[gene].transform(X)[:, :self.top_k_PC_by_gene[gene]])
 
         pca_projs_concat = np.concatenate(x_transform_list,axis=1)
@@ -65,14 +62,15 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
         return pca_projs_concat
 
     def transform(self, X, y=None):
+        mutations_by_gene = self.get_mutations_by_gene_dict(X)
         x_transform_list = []
 
         # Transform X to top_k pca loadings by gene
-        for gene in self.mutations_by_gene.keys():
-            x_transform_list.append(self.PCA_by_gene[gene].transform(X)[:, :self.top_k_PC_by_gene[gene]])
+        for gene in mutations_by_gene.keys():
+            x_by_gene_transform = self.PCA_by_gene[gene].transform(mutations_by_gene[gene])
+            x_transform_list.append(x_by_gene_transform[:, :self.top_k_PC_by_gene[gene]])
 
         pca_projs_concat = np.concatenate(x_transform_list,axis=1)
-        print("pca_projs_concat.shape", pca_projs_concat.shape)
 
         return pca_projs_concat
 
