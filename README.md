@@ -21,14 +21,28 @@ The project aims to implement an analytical tool to stratify Systemic Lupus Eryt
 
 
 # Workflow  
+The data consisted of approximately 110,000 SNPs for 630 SLE patients at 53 loci of interest identified by previous studies. The SNPs were split according to loci. At each locus the SNPs were independently reduced in dimension using PCA. The reduced coordinates were then re-aggregated to form a matrix of 630 patients by 1386 PCA coordinates. These data were clustered by three independent methods: , 
+
 ### 1. Data Preprocessing  
-1.1 The input data is a 1349 x 110K matrix. Each row is the record from one case and one column stands for one SNP site;  
+1.1 The input data is a 630 x 110K matrix. Each row is the record from one case and one column stands for one SNP site;  
 1.2 Split the matrix according to the 53 risk loci to generate 53 matrices;   
 1.3 Conduct PCA analysis to all the 53 matrics and only keep SNPs that contribute most to the 90% variance;   
-1.4 Merge the 53 matrices and generate 1349 x 34K matrix.  
+1.4 Merge the 53 matrices and generate 630 x 1386 matrix.  
 ### 2. Data Clustering  
-2.1 Conduct K-means to split the data into 6 clusters;  
-2.2 Conduct spectral clustering. 
+
+Three methods were implemented and compared: 
+
+1. K-means clustering
+1. Spectral clustering (nearest-neighbor and Gaussian similarity kernels)
+1. Hierarchical clustering
+
+Quality of clusters was assessed by silhouette plots and the overall silhouette score. All processing took place in the scikit-learn module version 0.21.3. 
+
+The nearest-neighbor kernel was found to give inferior results to other clustering methods and was discarded. The remaining three clustering methods gave clusters of similar sizes and quality. K-means clusters were used for final results. UMAP projection was then used to visualize the clusters. 
+
+### 3. Classifying New Data
+Once clusters have been found, data for new patients can be projected to the PCA coordinates and compared to each of the cluster centroids. New data can also be visualized using the UMAP projection to get visual information about the proximity to the clusters. 
+
 
 # Run  
 A newly admitted patient with the determined status of the initial 110K SNPs will be the input. The program will return the cluster this patient is assigned with.
