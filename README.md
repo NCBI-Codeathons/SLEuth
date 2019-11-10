@@ -15,7 +15,6 @@ Table of Contents
 - [Background](#Background)
 - [Workflow](#Workflow)
 - [Run](#Run)
-- [Licencing](#Licencing)
 
 # Background
 The project aims to implement an analytical tool to stratify Systemic Lupus Erythematosus (SLE) patients into subsets with significant differences based on their genetics variant information. Due to the observation in SLE clinical trials that drug efficacy is often seen in a subset of patients instead of the whole cohort, we believe that this stratification strategy could predict the potential clinical outcomes of a newly admitted SLE patient, and improve the discovery of effective drug therapies for targeted patients subsets. 
