@@ -14,7 +14,6 @@ Table of Contents
 
 - [Background](#Background)
 - [Workflow](#Workflow)
-- [Run](#Run)
 
 # Background
 The project aims to implement an analytical tool to stratify Systemic Lupus Erythematosus (SLE) patients into subsets with significant differences based on their genetics variant information. Due to the observation in SLE clinical trials that drug efficacy is often seen in a subset of patients instead of the whole cohort, we believe that this stratification strategy could predict the potential clinical outcomes of a newly admitted SLE patient, and improve the discovery of effective drug therapies for targeted patients subsets. 
@@ -43,6 +42,3 @@ The nearest-neighbor kernel was found to give inferior results to other clusteri
 ### 3. Classifying New Data
 Once clusters have been found, data for new patients can be projected to the PCA coordinates and compared to each of the cluster centroids. New data can also be visualized using the UMAP projection to get visual information about the proximity to the clusters. 
 
-
-# Run  
-A newly admitted patient with the determined status of the initial 110K SNPs will be the input. The program will return the cluster this patient is assigned with.
