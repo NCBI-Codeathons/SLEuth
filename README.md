@@ -30,10 +30,6 @@ The project aims to implement an analytical tool to stratify Systemic Lupus Eryt
 ### 2. Data Clustering  
 2.1 Conduct K-means to split the data into 6 clusters;  
 2.2 Conduct spectral clustering. 
-### 3. Confirmation of Difference
-3.1 For each gene in a cluster, the gene score is calculated to reflect the frequency and variability of its SNPs        
-<a href="https://www.codecogs.com/eqnedit.php?latex=SC&space;=&space;\frac{\sum_(N&space;of&space;readings,&space;SNP_i)^2}{\sum&space;SNPs}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?SC&space;=&space;\frac{\sum_(N&space;of&space;readings,&space;SNP_i)^2}{\sum&space;SNP_i}" title="SC = \frac{\sum_(N of readings, SNP_i)^2}{\sum SNPs}" /></a> where the sum of SNP_i means the total number of different SNPs in a gene;    
-3.2 The similarity levels of each gene in patients are calculated.
+
 # Run  
-Download the dataset "" and run:
-```Python
+A newly admitted patient with the determined status of the initial 110K SNPs will be the input. The program will return the cluster this patient is assigned with.
