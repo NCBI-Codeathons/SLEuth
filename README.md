@@ -33,8 +33,7 @@ The project aims to implement an analytical tool to stratify Systemic Lupus Eryt
 ### 3. Confirmation of Difference
 3.1 For each gene in a cluster, the gene score is calculated to reflect the frequency and variability of its SNPs        
 <a href="https://www.codecogs.com/eqnedit.php?latex=SC&space;=&space;\frac{\sum_(N&space;of&space;readings,&space;SNP_i)^2}{\sum&space;SNPs}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?SC&space;=&space;\frac{\sum_(N&space;of&space;readings,&space;SNP_i)^2}{\sum&space;SNP_i}" title="SC = \frac{\sum_(N of readings, SNP_i)^2}{\sum SNPs}" /></a> where the sum of SNP_i means the total number of different SNPs in a gene;    
-3.2 The similarity levels of each gene in different clusters are calculated. The results show that every two clusters have sinificantly different scores on the same gene.
-
+3.2 The similarity levels of each gene in patients are calculated.
 # Run  
 Download the dataset "" and run:
 ```Python
