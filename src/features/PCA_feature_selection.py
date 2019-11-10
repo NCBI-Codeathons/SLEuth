@@ -24,7 +24,6 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
         for x in mutations_gene_gb.groups:
             mutations_gene_df = mutations_gene_gb.get_group(x)
             gene_name = mutations_gene_df["Gene(s)"].iloc[0]
-            print(gene_name)
             mutations_gene_df = mutations_gene_df.drop(columns=["Gene(s)"]).dropna(axis=0).T
             #     mutations_gene_df.to_csv("../data/processed/SNPs_by_gene/"+gene_name+".csv")
             mutations_by_gene[gene_name] = mutations_gene_df
@@ -53,7 +52,7 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
 
             self.top_k_PC_by_gene[gene] = top_k
 
-            print(gene, self.mutations_by_gene[gene].shape[1], "top_k", top_k, self.PCA_by_gene[gene].shape)
+            print(gene, "top_k", top_k, self.PCA_by_gene[gene].components_.shape)
 
         # Transform X to top_k pca loadings by gene
         x_transform_list = []
@@ -66,7 +65,16 @@ class PCA_Variants2Gene_FeatureSelection(sklearn.base.TransformerMixin):
         return pca_projs_concat
 
     def transform(self, X, y=None):
-        pass
+        x_transform_list = []
+
+        # Transform X to top_k pca loadings by gene
+        for gene in self.mutations_by_gene.keys():
+            x_transform_list.append(self.PCA_by_gene[gene].transform(X)[:, :self.top_k_PC_by_gene[gene]])
+
+        pca_projs_concat = np.concatenate(x_transform_list,axis=1)
+        print("pca_projs_concat.shape", pca_projs_concat.shape)
+
+        return pca_projs_concat
 
 
 def get_top_k_components(snp_data, var_threshold=0.80, return_fit_transform=False):
