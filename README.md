@@ -14,7 +14,8 @@ Table of Contents
 
 - [Background](#Background)
 - [Workflow](#Workflow)
-- [Run](#Run)
+- [Licencing](#Licencing)  
+
 
 # Background
 The project aims to implement an analytical tool to stratify Systemic Lupus Erythematosus (SLE) patients into subsets with significant differences based on their genetics variant information. Due to the observation in SLE clinical trials that drug efficacy is often seen in a subset of patients instead of the whole cohort, we believe that this stratification strategy could predict the potential clinical outcomes of a newly admitted SLE patient, and improve the discovery of effective drug therapies for targeted patients subsets. 
@@ -41,8 +42,8 @@ Quality of clusters was assessed by silhouette plots and the overall silhouette 
 The nearest-neighbor kernel was found to give inferior results to other clustering methods and was discarded. The remaining three clustering methods gave clusters of similar sizes and quality. K-means clusters were used for final results. UMAP projection was then used to visualize the clusters. 
 
 ### 3. Classifying New Data
-Once clusters have been found, data for new patients can be projected to the PCA coordinates and compared to each of the cluster centroids. New data can also be visualized using the UMAP projection to get visual information about the proximity to the clusters. 
+Once clusters have been found, data for new patients can be projected to the PCA coordinates and compared to each of the cluster centroids. New data can also be visualized using the UMAP projection to get visual information about the proximity to the clusters.   
 
+# Licencing  
+Python >=3.6, pandas>=0.24.2, numpy >= 1.16.4, scipy >= 1.2.1, matplotlib >= 3.1.0, scikit-learn >= 0.21.3, seaborn >= 0.9.0, jupyter-notebook >= 6.0.1, umap-learn >= 0.3.10
 
-# Run  
-A newly admitted patient with the determined status of the initial 110K SNPs will be the input. The program will return the cluster this patient is assigned with.
